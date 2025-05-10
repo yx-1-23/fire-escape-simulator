@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>火灾逃生模拟器</title>
+    <style>
+        body {
+            font-family: '微软雅黑', sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .scene {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        .result {
+            display: none;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 5px solid;
+        }
+        .good-result {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+        .bad-result {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+    </style>
+</head>
+<body>
+    <!-- 场景1: 高层建筑火灾 -->
+    <div class="scene" id="scene1">
+        <h2>场景1: 10楼发生火灾，你在12楼</h2>
+        <p>浓烟从楼梯间涌上来，你该如何行动？</p >
+        <button class="correct" onclick="showResult('A1')">用湿毛巾捂住口鼻，弯腰沿楼梯向下逃生</button>
+        <button class="wrong" onclick="showResult('A2')">立即跑向顶楼天台</button>
+        <div id="resultA1" class="result good-result">
+            <h3>✓ 正确选择！</h3>
+            <p>成功逃至安全区域，消防数据显示：向下逃生存活率比向上高83%</p >
+            <button onclick="loadScene(2)">继续下一个场景</button>
+        </div>
+        <div id="resultA2" class="result bad-result">
+            <h3>✗ 危险选择！</h3>
+            <p>顶楼门被锁，浓烟迅速充满空间（参考：2023南京火灾案例）</p >
+            <button onclick="restart()">重新选择</button>
+        </div>
+    </div>
+
+    <!-- 场景2: 浓烟封锁通道 -->
+    <div class="scene" id="scene2" style="display:none;">
+        <h2>场景2: 逃生通道被浓烟封锁</h2>
+        <p>可见度低于1米，温度急剧上升，如何应对？</p >
+        <button class="correct" onclick="showResult('B1')">退回房间，用湿毛巾封门缝</button>
+        <button class="wrong" onclick="showResult('B2')">用湿毛巾捂住口鼻强行穿越</button>
+        <div id="resultB1" class="result good-result">
+            <h3>✓ 科学应对！</h3>
+            <p>实木门可阻挡火势15分钟，已发出求救信号，坚持到救援！</p >
+        </div>
+        <div id="resultB2" class="result bad-result">
+            <h3>✗ 致命错误！</h3>
+            <p>一氧化碳浓度超过500ppm，30秒后昏迷（实验数据）</p >
+            <button onclick="restart()">重新开始</button>
+        </div>
+    </div>
+
+    <script>
+        function showResult(resultId) {
+            // 隐藏所有结果
+            document.querySelectorAll('.result').forEach(el => el.style.display = 'none');
+            // 显示选定结果
+            document.getElementById('result'+resultId).style.display = 'block';
+        }
+
+        function loadScene(sceneNumber) {
+            document.querySelectorAll('.scene').forEach(el => el.style.display = 'none');
+            document.getElementById('scene'+sceneNumber).style.display = 'block';
+        }
+
+        function restart() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
